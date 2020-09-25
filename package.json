@@ -4,7 +4,9 @@
   "description": "Manage Attendence of all students by uploading xlsx attendence file from Teams",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Aakash CSE A",
   "license": "ISC",
