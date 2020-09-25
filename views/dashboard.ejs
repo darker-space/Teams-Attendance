@@ -1,0 +1,223 @@
+<%- include("./partials/header1.ejs") %>
+    <!-- <link rel="stylesheet" href="/stylesheets/hospital.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+    <style>
+        body{
+            font-family: 'Montserrat', sans-serif;
+            /* background-image: url(https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1957&q=80); */
+           /* background-image: url(https://images.unsplash.com/photo-1588637382189-30b835216aef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1927&q=80); */
+        }
+        #sub1:hover{
+            font-size: 1.2em;
+            color: cyan;
+        }
+      
+        #guide1:hover{
+            font-weight: 800;
+            color:navy;
+            background-color:rgb(172, 255, 47);
+            
+        }
+        
+    </style>
+ <%- include("./partials/header2.ejs")%>
+
+
+ <div class="jumbotron container p-4 " style="background-color: rgba(0,0,0, 0.822); ">
+        
+    <div class="row">
+        <div class="col-2">
+            <!-- <img class="img-fluid" src="https://f0.pngfuel.com/png/585/214/teams-logo-png-clip-art-thumbnail.png"> -->
+            <i class="fas fa-user-friends display-2" style="color:antiquewhite;"></i>
+            
+        </div>
+        <div class="col-10">
+            <span class=" d-flex display-4 justify-content-center " style="font-weight: 700; color:antiquewhite;">
+                Dashboard
+                 </span>
+        </div>
+    </div>
+    </div>
+    
+    <div class="text-center pb-3 mb-2">
+        <h3 class="text-primary">
+          Welcome <%= userinfo.name %> ...........!   
+        </h3>
+        <div class="container  d-flex justify-content-between">
+          <a href="#" type="button" class="btn btn-light text-primary"  data-toggle="modal" data-target="#author"> Meet Developer...  :} </a>
+          <a href="/user/logout" class="ml-3 btn btn-dark"> Logout</a>
+        </div>
+    </div>
+    
+    
+    
+    <!-- about Aothor -->
+    <!-- Modal -->
+                      <div class="modal fade" id="author" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Hey There !</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                               <div class="card">
+                                 <div class="card-body row">
+                                   <div class="col-4">
+                                    <div style="height:100px; width:100px; padding: 2px auto;">
+                                      <img class="img-fluid" src="/uploads/me.jpg" alt="Card image cap">
+                                       </div>
+                                   </div>
+                                     <div class="col-8 bg-light text-secondary">
+                                       Hey There ! I am Aakash...
+                                       I am 3rd year CSE student at BIT Mesra,Ranchi.<Br>
+                                      Hope You feel amazing after using my website..
+                                      Reach me out and share your reviews...Email me or ping me on LinkedIn..
+                                      <br>
+                                      :}
+                                     </div>
+                                  
+                                 </div>
+                                 <div class="card-footer"> 
+                                  <i class="fas fa-envelope-open"></i> ak.grd.140@gmail.com
+                                   <a class="mx-5" href="https://www.linkedin.com/in/aakash-a62b3b192/"><i class="text-info fab fa-linkedin-in"></i></a>
+                                   <a class="ml-3" href="https://github.com/darker-space"><i class="text-info fab fa-github"></i> </a>
+                                   
+                                 </div>
+                               </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+    
+    <!-- Button trigger modal -->
+    <div class="jumbotron container-fluid text-secondary text-center pt-3 pb-2 px-4">
+    <div type="button" class="container-fluid btn btn-xl " id="guide1" style="background-color:rgba(172, 255, 47, 0.61); " data-toggle="modal" data-target="#guide">
+            <span style="font-size: large; font-weight: 700;"  id="guide1">Guide..!</span>
+           </div>
+    </div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="guide" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Guide...!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <ul>
+            <li>
+                Make subjects and then upload .csv file of teams attendence to maintain students attendence.
+              </li>
+              <li>
+                Choose min time that students must have to be online in meeting to get attendence.
+              </li>
+              <li>
+                  View total no of classes and each student's total attendence.
+              </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    
+    
+  
+    <div class=" mt-5 mx-3 row justify-content-around">
+        <% for(var i=0;i<userinfo.sub.length;i++){ %> 
+            <%var subject= userinfo.sub[i];%> 
+        <div class="col-lg-3 col-6 bg-dark mx-2 mb-4" style="height: 10rem;" >
+            <% var id=subject._id; console.log(id); id="/user/subject/"+id; console.log(id);%> 
+            <a href="<%= id %>">
+            <div class="row align-items-center" style="height: 10rem; color: greenyellow;">
+                <div class="col-4" id="sub1">
+                    <i class="fas fa-book-reader  display-2"></i>
+                </div>
+                <div class="col-8 " id="sub1">
+                    <h2><b><%= subject.name %></b> </h2>
+                    
+                        <%= subject.subject_id %> 
+                        <%= subject.branch %>
+                        <%= subject.section %> 
+                        <%= subject.year %> 
+                
+                    
+                </div>
+                
+            </div>
+                            
+        </a>
+        </div>
+        <% } %> 
+        
+        <div class="col-md-3 col-6 bg-dark mx-2 mb-4 text-center pt-5" style="height: 10rem;" id="sub2">
+    
+            <!-- Button trigger modal -->
+            
+<div type="button" class="btn text-primary" data-toggle="modal" data-target="#subject" style=" background-color: #343a40;">
+    <h2 id="sub2"> <i class="fas fa-drafting-compass"></i> Create Class </h2>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="subject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"> Create Class</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/user/subject/new" method="POST">
+            <div class=" form-group">
+                <label>Subject name (Short form)</label>
+                <input class="form-control form1 border-dark" type="text" placeholder="subject name" name="name" required>
+            </div>
+            <div class=" form-group">
+                <label>Subject code</label>
+                <input class="form-control form1 border-dark" type="text" placeholder="CS201" name="subject_id" required>
+            </div>
+            <div class=" form-group">
+                <label>Department</label>
+                <input class="form-control form1 border-dark" type="text" placeholder="CSE" name="branch" required>
+            </div>
+            <div class=" form-group">
+                <label>Section</label>
+                <input class="form-control form1 border-dark" type="text" placeholder="A" name="section" required>
+            </div>
+            <div class=" form-group">
+                <label>Batch Year</label>
+                <input class="form-control form1 border-dark" type="text" placeholder="2k18" name="year" required>
+            </div>
+            <button  class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+        
+    </div>
+   
+       <div style="height: 100px;">
+           
+       </div>
+
+ 
+<%- include("./partials/footer1.ejs") %>
+<!-- own scripts -->
+<%- include("./partials/footer2.ejs") %>
