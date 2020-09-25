@@ -91,7 +91,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
         .on('end',function() {
         //do something with csvData
             //done extracting now delete file
-        fs.unlink(".\\"+path1, function (err) {
+        fs.unlink(".\\\"+path1, function (err) {
             if (err)  {
                 console.log(err);
                 //res.redirect("back");
