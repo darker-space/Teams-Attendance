@@ -94,11 +94,11 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
         fs.unlink(".\\"+path1, function (err) {
             if (err)  {
                 console.log(err);
-                res.redirect("back");
+                //res.redirect("back");
             }
             else{
             console.log('File deleted!')
-            res.redirect("back");
+            //res.redirect("back");
             };
         }); 
         //console.log(csvData);
@@ -240,7 +240,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
                 curr_user.sub[subi].students.set(finalname[k],xx+1);
                }
          
-               console.log("yoyoyoyoyoyoyo");
+               console.log("##yoyoyoyoyoyoyo");
          
                curr_user.save(function(err,user11){
                 if(err)
