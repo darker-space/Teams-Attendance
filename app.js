@@ -11,57 +11,9 @@ connectDB();
 app.use(express.static("public"));
 
 
-
-// var fs = require('fs'); 
-// const csv = require('csv-parser');
-
-// var csvData=[];
-// fs.createReadStream('./Data2.csv','utf16le')
-//     .pipe(csv({delimiter: " ",separator:"\t"}))
-//     .on('data', function(csvrow) {
-        
-//         var name=Object.keys(csvrow)[0];
-//         csvrow["Full Name"]=csvrow[name];
-//         delete csvrow[name];
-//         csvData.push(csvrow);    
-//     })
-//     .on('end',function() {
-//       //do something with csvData
-//      //console.log(csvData);
-//      console.log(typeof(csvData[0]));
-//      console.log(csvData[0]["Timestamp"]);
-//     })
-//     .on('error', console.log);
-    
-var moment=require('moment');
-
-//2:47:05 PM 2:44:30 PM
-
-    
-// var aa = new Date('7/22/2020, 10:46:05 AM');
-// var bb = new Date('7/22/2020, 10:36:15 AM');
-// console.log(aa,bb);
-
-// var a = moment.duration(aa);
-// var b = moment.duration(bb);
-// console.log(typeof(moment(aa).diff(moment(bb), 'minutes')));
-
-// var start='9:00 am';
-//         var date1="2020-09-11";
-//         console.log("AEhhhhhhhhhh");
-//         console.log(new Date(date1+","+start));
-        
-// var cc=new Date(date1+","+start);
-// var dd=moment(cc).add(60, 'minutes');
-// console.log(moment(dd).diff(moment(cc), 'minutes'));
-
-
-
-
 //models
 var User = require("./models/user.js");
    
-
 
 //routes require
 var userRoutes = require("./routes/user.js");
