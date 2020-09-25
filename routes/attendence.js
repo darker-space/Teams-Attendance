@@ -79,7 +79,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
     
     var nameSet=new Set();
 
-    fs.createReadStream('.\\'+path1,'utf16le')
+    fs.createReadStream('./'+path1,'utf16le')
         .pipe(csv({delimiter: " ",separator:"\t"}))
         .on('data', function(csvrow) {
             //console.log(csvrow);
@@ -91,17 +91,16 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
         .on('end',function() {
         //do something with csvData
             //done extracting now delete file
-        // fs.unlink(""+path1, function (err) {
-        //     if (err)  {
-        //         console.log(err);
-        //         //res.redirect("back");
-        //     }
-        //     else{
-        //     console.log('File deleted!')
-        //     //res.redirect("back");
-        //     };
-        // }); 
-        //console.log(csvData);
+        fs.unlink("./"+path1, function (err) {
+            if (err)  {
+                console.log(err);
+                //res.redirect("back");
+            }
+            else{
+            console.log('File deleted!')
+            //res.redirect("back");
+           
+        console.log(csvData);
         
         var sizee=Object.keys(csvData[0]).length;
         //console.log("length is ...........", sizee);
@@ -257,7 +256,8 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
         });
         
      
-        
+                };
+            }); 
         })
         .on('error', console.log);
  
