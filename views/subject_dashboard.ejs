@@ -96,15 +96,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Guide...!</h5>
+          <h5 class="modal-title text-primary" id="exampleModalLongTitle">Guide...!</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <ul>
+            <ul >
             <li>
-                Make subjects and then upload .csv file of teams attendence to maintain students attendence.
+                Make classes(subjects) and then upload .csv file of teams attendence to maintain students attendence.
               </li>
               <li>
                 Choose min time that students must have to be online in meeting to get attendence.
@@ -112,7 +112,21 @@
               <li>
                   View total no of classes and each student's total attendence.
               </li>
+              <li>
+                Kindly fill correct data while adding attendance like time and date .
+            </li>
+            <li>
+             Do not alter Teams .csv file before uploading.
+          </li>
             </ul>
+            <p class="bg-light pt-3 text-secondary">
+              <h3>Good Practices</h3>
+              During team meeting kindly try to download attendance 5 min prior to scheduled end time of lecture.
+              ( Microsoft Team .csv file stores all data for whole duration of lecture regarding which student were online for how much duration.)
+            </p>
+            <p class="text-success">
+              For any further query please contact <i class="fas fa-envelope-open mx-2"></i> ak.grd.140@gmail.com
+            </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -166,6 +180,9 @@
                 <li class="list-group-item"> <%= sub.subject_id %> <%= sub.branch %> <%= sub.section %> <%= sub.year %></li>
               </ul>
               <% var s3=subject; s3="/attendence/"+s3;%> 
+              <p class="text-danger">
+                Kindly fill Correct Data....
+              </p>
               <form action="<%= s3 %>" method="POST" enctype="multipart/form-data">
                 <div class=" form-group">
                     <label>Choose Date</label>
@@ -268,7 +285,7 @@
               <tr>
                 <th scope="row"><%= ii+1%></th>
                 <td><%= date1.date %> </td>
-                <td><%= date1.students.length -1%> </td>
+                <td> <%= Math.max(date1.students.length -1,0) %> </td>
                 <td><%= date1.timing %> minutes 
                 
                 

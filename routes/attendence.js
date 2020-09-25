@@ -102,7 +102,9 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
            
         console.log(csvData);
         
-        var sizee=Object.keys(csvData[0]).length;
+        var sizee=0;
+        if(csvData[0])
+         sizee=Object.keys(csvData[0]).length;
         //console.log("length is ...........", sizee);
         if(sizee!=3 ||(!csvData[0]["Full Name"])||(!csvData[0]["Timestamp"])||(!csvData[0]["User Action"]))
         {
@@ -195,6 +197,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
                     console.log("subject not found...");
                     res.redirect("back");   
                 }
+                
                 // curr_user.sub[subi].dates
                 
                 //console.log("$$$$$");
