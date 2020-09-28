@@ -104,13 +104,13 @@
         <div class="modal-body">
             <ul >
             <li>
-                Make classes(subjects) and then upload .csv file of teams attendence to maintain students attendence.
+                Make classes(subjects) and then upload .csv file of teams attendence to maintain students attendance.
               </li>
               <li>
-                Choose min time that students must have to be online in meeting to get attendence.
+                Choose min time that students must have to be online in meeting to get attandence.
               </li>
               <li>
-                  View total no of classes and each student's total attendence.
+                  View total no of classes and each student's total attendance.
               </li>
               <li>
                 Kindly fill correct data while adding attendance like time and date .
@@ -160,7 +160,7 @@
         View all Students Attendance
       </button>
       <button class="btn btn-lg btn-dark"  data-toggle="modal" data-target="#attendence">
-        Add Attendence
+        Add Attendance
       </button>
       
       
@@ -169,7 +169,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle"> Add Attendence</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle"> Add Attendance</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -185,7 +185,7 @@
               </p>
               <form action="<%= s3 %>" method="POST" enctype="multipart/form-data">
                 <div class=" form-group">
-                    <label>Choose Date</label>
+                    <label>Choose Date of that lecture</label>
                     <input class="form-control form1 border-dark" type="date"  name="date1" required>
                 </div>
                 <div class=" form-group">
@@ -216,7 +216,7 @@
                
             </div>
                 <div class=" form-group">
-                    <label>Upload Microsoft Teams attendence .csv file here ! </label>
+                    <label>Upload Microsoft Teams attendance .csv file here ! </label>
                     <input class="form-control form1 border-dark" type="file" placeholder="Upload" name="attendence_file" required>
                 </div>
 
@@ -235,14 +235,14 @@
     
   <div class="container">
     <div class="collapse border border-3 border-dark" id="attend11" class="card border-2 border border-dark">
-      <div class="card-header"><h2>Students Attendence</h2></div>
+      <div class="card-header"><h2>Students Attendance</h2></div>
       <div class="card-body">
         <table class="table">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Full Name</th>
-              <th scope="col">Total Attendence</th>
+              <th scope="col">Total Attendance</th>
             </tr>
           </thead>
           <tbody>
@@ -272,7 +272,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Date and Time </th>
-              <th scope="col">Total Attendence</th>
+              <th scope="col">Total Attendance</th>
               <th scope="col">Min required Time(for getting attendance)
                  
               </th>
