@@ -54,6 +54,11 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
 
     console.log("yo!! ");
     var uploaded = req.file;
+    if(!uploaded)
+    {
+        res.send("Error....Please Check file type..it must be .csv file...");
+    }
+    else{
     var path1=uploaded.path;
     var timing =req.body.timing;
     var date1=req.body.date1;
@@ -263,7 +268,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
             }); 
         })
         .on('error', console.log);
- 
+    }
 })
 
 
