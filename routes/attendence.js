@@ -32,7 +32,7 @@ var storage = multer.diskStorage({
 //filefilter
 
 var filefilter = function(req, file, cb) {
-        if (file.mimetype === "application/octet-stream") {
+        if (file.mimetype === "application/octet-stream"||file.mimetype==="text/comma-separated-values") {
         console.log("hello..3");
             
             cb(null, true);
