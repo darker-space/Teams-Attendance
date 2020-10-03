@@ -246,12 +246,12 @@
             </tr>
           </thead>
           <tbody>
-            <% var ii=parseInt(0);  %> 
-            <%if(sub.students){sub.students.forEach(function(val,key,map){ %> 
+            <% var ii=parseInt(0); var obj=[]; %> 
+            <%if(sub.students){sub.students.forEach(function(val,key,map){ obj.push([key,val])}); obj.sort(); obj.forEach(function(xx){ %> 
               <tr>
                 <th scope="row"><%= ii%></th>
-                <td><%= key %> </td>
-                <td><%= val %> </td>
+                <td><%= xx[0] %> </td>
+                <td><%= xx[1] %> </td>
               </tr>
               <% ii++}) } %> 
           </tbody>

@@ -89,7 +89,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
         .on('data', function(csvrow) {
             //console.log(csvrow);
             var name=Object.keys(csvrow)[0];
-            csvrow["Full Name"]=csvrow[name];
+            csvrow["Full Name"]=csvrow[name].toUpperCase();
             delete csvrow[name];
             csvData.push(csvrow);      
         })
@@ -170,6 +170,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
          console.log(finalname);
          var aDate=date1+","+start;
          
+         finalname.sort();
          var datelist1=new Date1({
             date: aDate,
             students: finalname,
@@ -246,7 +247,8 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
                 var xx=parseInt(curr_user.sub[subi].students.get(finalname[k]));
                 curr_user.sub[subi].students.set(finalname[k],xx+1);
                }
-         
+               
+               //Object.keys(curr_user.sub[subi].students).sort();
                console.log("##yoyoyoyoyoyoyo");
          
                curr_user.save(function(err,user11){
