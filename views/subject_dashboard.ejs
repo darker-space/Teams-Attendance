@@ -29,7 +29,7 @@
  <div class="jumbotron container-fluid p-4 text-center " style="background-color: #008080;" >
         <span class="display-3 text-light"><%= sub.name %> </span>
 </div>
-    
+<a href="/user/dashboard/" class="mx-5 btn btn-info text-light"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
           <div class="text-center pb-3 mb-2">
             <h3 class="text-primary">
               Welcome <%= userinfo.name %> ...........!   
@@ -192,8 +192,8 @@
                   <label>Choose minimum time that students must have to be online to get attendance  (minutes)</label>
                   <select id="inputState" class="form-control" name="timing">
                     <option >55</option>
-                    <option selected>50</option>
-                    <option >45</option>
+                    <option >50</option>
+                    <option selected>45</option>
                     <option >40</option>
                     <option >35</option>
                     <option >30</option>
@@ -235,7 +235,10 @@
     
   <div class="container">
     <div class="collapse border border-3 border-dark" id="attend11" class="card border-2 border border-dark">
-      <div class="card-header"><h2>Students Attendance</h2></div>
+      <div class="card-header"><h2>Students Attendance</h2>
+        <% var ss=/download/; ss=ss+subject; %> 
+        <a href="<%= ss %> " class="btn btn-info text-light"><i class="fa fa-download" aria-hidden="true"></i> Dowload This Info </a>
+      </div>
       <div class="card-body">
         <table class="table">
           <thead class="thead-dark">
@@ -243,15 +246,25 @@
               <th scope="col">#</th>
               <th scope="col">Full Name</th>
               <th scope="col">Total Attendance</th>
+              <th scope="col"> Attendance percentage</th>
             </tr>
           </thead>
           <tbody>
             <% var ii=parseInt(0); var obj=[]; %> 
             <%if(sub.students){sub.students.forEach(function(val,key,map){ obj.push([key,val])}); obj.sort(); obj.forEach(function(xx){ %> 
-              <tr>
+              <%let pp=0; if(sub.dates.length){pp=(xx[1]*100)/sub.dates.length } %>
+            <tr <%if(pp<=50){ %>
+             class="bg-danger text-light"
+              <%} else if(pp<=75){ %>
+               class="bg-warning" 
+              <% } %>
+               >
                 <th scope="row"><%= ii%></th>
                 <td><%= xx[0] %> </td>
                 <td><%= xx[1] %> </td>
+                <td>
+                  <%= pp %> %
+                 </td>
               </tr>
               <% ii++}) } %> 
           </tbody>
@@ -268,7 +281,7 @@
       <div class="card-header "><h2>Total Classes <%=sub.dates.length %> </h2></div>
       <div class="card-body">
         <table class="table">
-          <thead class="bg-danger text-light">
+          <thead class="text-light" style="background-color: rgb(0, 0, 65);">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Date and Time </th>
@@ -280,10 +293,10 @@
             </tr>
           </thead>
           <tbody>
-            <% var ii=parseInt(0);  %> 
+            <%  var ii1=parseInt(0);  %> 
             <%if(sub.dates){sub.dates.forEach(function(date1){ %> 
               <tr>
-                <th scope="row"><%= ii+1%></th>
+                <th scope="row"><%= ii1+1 %></th>
                 <td><%= date1.date %> </td>
                 <td> <%= Math.max(date1.students.length -1,0) %> </td>
                 <td><%= date1.timing %> minutes 
@@ -313,28 +326,55 @@
                 
                 </td>
                 <td>
-                  
-                  <button type="button" class="btn-dark btn btn-xl" id="guid" data-toggle="modal" data-target="#<%= date1._id %>">
-                   View Students List
+                  <% var sese="#"+date1._id+"@" %> 
+                  <button type="button" class="btn-dark btn btn-xl" id="guid" data-toggle="modal" data-target="#<%= sese %>">
+                    Full Data
                    </button>
                 
                 
                 <!-- Modal -->
-                              <div class="modal fade" id="<%= date1._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                              <div class="modal fade" id="<%= sese %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLongTitle">Students present on <%= date1.date %></h5>
+                                      <h5 class="modal-title" id="exampleModalLongTitle">All students data on <%= date1.date %></h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
                                     </div>
                                     <div class="modal-body">
-                                      <ul class="list-group list-group-flush">
-                                        <% date1.students.forEach(function(name){ %> 
-                                        <li class="list-group-item"><%= name %>  </li>
-                                        <% }); %> 
-                                      </ul>
+                                      
+                                      
+                                      <table class="table">
+                                        <thead class="bg-danger text-light">
+                                          <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name </th>
+                                            <th scope="col">Time attended</th>
+                                            <th scope="col"> </th>
+                                                              
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <% var ii5=parseInt(0);  %> 
+                                          <% if( date1.fullData){console.log(date1.fullData[0]); date1.fullData.forEach(function(obj){ %> 
+                                            <tr>
+                                              <th scope="row"><%= ii5+1%></th>
+                                              <td><%= obj.name %> </td>
+                                              <td>  <%= obj.time %> min </td>
+                                              <td>
+                                              <% var jj=parseInt(obj.time); if(jj>=date1.timing){ %> 
+                                                <i class="fas fa-check-circle text-success" ></i>
+                                              <% }else{ %>
+                                                <i class="fas fa-times text-danger" ></i>
+                                                
+                                              <% } %>  
+                                              </td>
+                                            </tr>
+                                          <% ii5++;}) } %> 
+                                        </tbody>
+                                        </table>
+                                      
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -343,10 +383,42 @@
                                 </div>
                               </div>
                               
-                            </td>
+                            
+                            
+                            <button type="button" class="btn-dark btn btn-xl" id="guid" data-toggle="modal" data-target="#<%= date1._id %>">
+                              List
+                             </button>
+                          
+                          
+                          <!-- Modal -->
+                                        <div class="modal fade" id="<%= date1._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title text-success " id="exampleModalLongTitle">Students marked present on <%= date1.date %></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <ul class="list-group list-group-flush">
+                                                  <%if(date1.students){ date1.students.forEach(function(name){ %> 
+                                                  <li class="list-group-item"><%= name %>  </li>
+                                                  <% }); } %> 
+                                                </ul>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        
+                                      </td>
+                                      
                 
               </tr>
-              <% ii++}) } %> 
+              <% ii1++}) } %> 
           </tbody>
         </table>
         

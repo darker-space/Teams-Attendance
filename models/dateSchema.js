@@ -4,7 +4,8 @@ var dateSchema = mongoose.Schema({
     date: String,
     timing: String,
     students: [String],
-    attendence:{ type: Number, default: 0 }
+    attendence:{ type: Number, default: 0 },
+    fullData:[{}]
 })
 
 module.exports = dateSchema;

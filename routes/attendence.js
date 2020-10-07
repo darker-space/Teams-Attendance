@@ -146,7 +146,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
          
          //last update
          
-         var finalname=[];
+         var finalname=[],fullData=[];
          //console.log(nameSet);
         for(let name1 of nameSet)
         {
@@ -156,6 +156,7 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
                     totaltime.set(name1,0);
                 }
             var time1=parseInt(totaltime.get(name1));
+           // console.log(name1,time1);
             if(last.get(name1)=="J")
             {
                 var aa = new Date(firsttime.get(name1));
@@ -165,16 +166,35 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
             {
                 finalname.push(name1);
             }
+            //console.log(name1,time1);
+            //console.log(".......");
+            fullData.push({"name":name1,"time":time1});
         }
         
          console.log(finalname);
          var aDate=date1+","+start;
          
+         function compare(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const bandA = a["name"].toUpperCase();
+            const bandB = b["name"].toUpperCase();
+          
+            let comparison = 0;
+            if (bandA > bandB) {
+              comparison = 1;
+            } else if (bandA < bandB) {
+              comparison = -1;
+            }
+            return comparison;
+          }
+          
          finalname.sort();
+         fullData.sort(compare);
          var datelist1=new Date1({
             date: aDate,
             students: finalname,
             timing:timing,
+            fullData:fullData,
             attendence:finalname.length
          });
          
@@ -238,12 +258,19 @@ router.post("/attendence/:id", isloggedin, upload.single("attendence_file"), fun
                     curr_user.sub[subi].dates.push(datelist1);
                 }
                // console.log("$$$$$");
+               for(let name1 of nameSet)
+               {
+                   if(!curr_user.sub[subi].students.has(name1))
+                   {
+                    curr_user.sub[subi].students.set(name1,0);
+                   }
+                }
                for(var k=0;k<finalname.length;k++)
                {
-                   if(!curr_user.sub[subi].students.has(finalname[k]))
-                   {
-                    curr_user.sub[subi].students.set(finalname[k],0);
-                   }
+                //    if(!curr_user.sub[subi].students.has(finalname[k]))
+                //    {
+                //     curr_user.sub[subi].students.set(finalname[k],0);
+                //    }
                 var xx=parseInt(curr_user.sub[subi].students.get(finalname[k]));
                 curr_user.sub[subi].students.set(finalname[k],xx+1);
                }
@@ -349,11 +376,80 @@ router.get("/date/delete/:subid/:dateid",isloggedin,function(req,res){
 
 });
 
+
+//download
+
+router.get("/download/:subid",isloggedin,function(req,res){
+    var subid=req.params.subid;    
+    User.findById(req.user._id,function(err,user1){
+        if(err)
+        {
+            res.redirect("back");
+        }
+        else{
+                      
+            var jj;
+            
+            for(var i=0;i<user1.sub.length;i++)
+            {
+                if(user1.sub[i]._id.equals(subid))
+                {
+                    jj=i; break;
+                }
+            }
+                          
+            if(user1.sub[jj].students)
+            {
+                var download_file=[];
+                var xxx=user1.sub[jj].dates.length;
+                user1.sub[jj].students.forEach(function(val,key,map){
+                    var zz=(parseInt(val)*100)/xxx;
+                    zz=zz+" %";
+                    download_file.push({"Full_name":key.toUpperCase(),"Total_attendance":val,"Total_class":xxx,"Attendance_percentage":zz});
+                    }); 
+                     
+                    function compare(a, b) {
+                        // Use toUpperCase() to ignore character casing
+                        const bandA = a["Full_name"];
+                        const bandB = b["Full_name"];
+                      
+                        let comparison = 0;
+                        if (bandA > bandB) {
+                          comparison = 1;
+                        } else if (bandA < bandB) {
+                          comparison = -1;
+                        }
+                        return comparison;
+                      }
+                      download_file.sort(compare);
+           
+                      //console.log(download_file);
+                      
+            const json2csv = require('json2csv').parse;
+            const csvString = json2csv(download_file);
+            var atten_name="attachment; filename="+user1.sub[jj].branch+"_"+user1.sub[jj].section+"_"+user1.sub[jj].year+".csv"
+            res.setHeader('Content-disposition', atten_name);
+            res.set('Content-Type', 'text/csv');
+            res.status(200).send(csvString);
+            }
+            else
+            {
+                res.redirect("back");
+            }
+            
+         
+        }
+        
+    })
+
+});
+
 //isloggedin
-function isloggedin(req, res, next) {
+function isloggedin(req, res, next) {    
     if (req.isAuthenticated())
         next();
     else {
+         req.flash("error","Session out... Re-login in...!");
         res.redirect("/");
     }
 }

@@ -112,10 +112,11 @@ router.get("/class/delete/:subid",isloggedin,function(req,res){
 });
 
 //isloggedin
-function isloggedin(req, res, next) {
+function isloggedin(req, res, next) {    
     if (req.isAuthenticated())
         next();
     else {
+         req.flash("error","Session out... Re-login in...!");
         res.redirect("/");
     }
 }

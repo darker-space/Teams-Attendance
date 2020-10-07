@@ -137,7 +137,7 @@
         <% for(var i=0;i<userinfo.sub.length;i++){ %> 
             <%var subject= userinfo.sub[i];%> 
         <div class="col-lg-3 col-6 bg-dark mx-2 mb-4" style="height: 10rem;" >
-            <% var id=subject._id; console.log(id); id="/user/subject/"+id; console.log(id);%> 
+            <% var id=subject._id;  id="/user/subject/"+id; %> 
             <a href="<%= id %>">
             <div class="row align-items-center" style="height: 10rem; color: greenyellow;">
                 <div class="col-4" id="sub1">

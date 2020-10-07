@@ -4,6 +4,7 @@ var express= require("express"),
     passport=require("passport"),
     localStrategy=require("passport-local"),
     path = require("path"),
+    flash = require("connect-flash"),
     connectDB = require("./DB/connection");
 
 var app=express();
@@ -38,6 +39,7 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -46,6 +48,7 @@ passport.deserializeUser(User.deserializeUser());
 //res.locals
 app.use(function(req, res, next) {
     res.locals.currUser = req.user;
+    // res.locals.error=req.flash("error");
     //console.log("hello i am police " + req.user);
     next();
 });

@@ -9,24 +9,24 @@ var Subject = require("../models/subject.js");
 
 //root
 router.get("/", function(req, res) {
-    //res.send("hello");
-    res.render("home.ejs");
+    
+    var xx=req.flash("error");
+    //console.log("xx",xx);
+    res.render("home.ejs",{error1:xx});
 })
 
 router.get("/home2", function(req, res) {
-    //res.send("hello");
-    res.render("home2.ejs");
+    res.render("home2.ejs",{error1:req.flash("error")[0]});
 })
 
 //login
 
 
 router.post("/user/login/", passport.authenticate("local", {
-    failureRedirect: "/"
-}), function(req, res) {
-    //console.log("valid user "+req.user);
-    res.redirect("/user/dashboard/");
-});
+    successRedirect:"/user/dashboard/",
+    failureRedirect: "/",
+    failureFlash: true
+}));
 
 //logout
 
@@ -52,7 +52,8 @@ router.post("/user/signup/", function(req, res) {
     User.register(user1, req.body.password,
         function(err, user) {
             if (err) {
-                console.log(err);
+                //console.log(err);
+                req.flash("error",err.message);
                 res.redirect("/");
             } else {
                 passport.authenticate("local")(req, res, function() {
@@ -69,11 +70,12 @@ router.get("/user/logout", function(req, res) {
     res.redirect("/");
 });
 
-//isloggedin
-function isloggedin(req, res, next) {
+isloggedin
+ function isloggedin(req, res, next) {    
     if (req.isAuthenticated())
         next();
     else {
+         req.flash("error","Session out... Re-login in...!");
         res.redirect("/");
     }
 }
